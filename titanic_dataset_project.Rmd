@@ -1,0 +1,213 @@
+---
+title: "titanic_dataset_project"
+author: "Manuel Herrera Lara y Anahí Berumen Murillo"
+date: "15/9/2020"
+output: pdf_document
+---
+
+# 1.- The data domain
+we will perform an analysis on the titanic dataset to identify 
+which passengers survived the wreck or what kind of people were most likely to survive
+taking into account their characteristics such as name, age, sex,
+socioeconomic class, etc. As a brief description we can say that the sinking of the Titanic was one of the most infamous and remembered shipwrecks in history.
+The RMS Titanic was a British passenger cruise ship that sank in the North Atlantic Ocean and this happened on April 15, 1912, during its maiden voyage; and the RMS Titanic, considered "unsinkable", sank after hitting an iceberg. Unfortunately, there were not enough lifeboats for everyone on board, resulting in the deaths of 1,502 of the 2,224 passengers and crew. Apparently some groups of people were more likely to survive than others. And finally we highlight that the Titanic was the largest ship afloat at the time and was built by the Harland and Wolff shipyard in Belfast.
+
+![Titanic](/home/chino/Documentos/17_materias_IS/1_mineria_de_datos/4_semana_miniproyecto1/2_titanic_dataset_project_us/titanic.jpg)
+
+\newpage
+# 2.- Describe each of the variables
+## variable, definition and / or possible values
+PassengerId
+: Passenger identification number.
+
+Survived
+: Indicates if the passenger survived. (0 = No, 1 = Yes).
+
+Pclass
+: Define the socioeconomic class of the passenger. (1 = Lower class, 2 = Middle class, 3 = Upper class).
+
+Name
+: Name of the passenger.
+
+Sex
+: Gender of the passenger. (Male and/or Female).
+
+Age
+: Passenger age.
+
+Sib/Sp
+: Number of Siblings/Spouses Aboard.
+
+Parch
+: Number of Parents/Children Aboard.
+
+Ticket
+: Passenger's ticket number.
+
+Fare
+: Passenger fare.
+
+Cabin
+: Passenger cabin number.
+
+Embarked
+: Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton).
+
+### additional notes for some variables
+sibsp
+: The dataset defines family relationships like this:
+: Sibling - Brother, Sister, Stepbrother, or Stepsister of Passenger Aboard Titanic.
+: Spouse  - Husband or Wife of Passenger Aboard Titanic.
+
+Parch
+: Parent - Mother or Father of Passenger Aboard Titanic.
+: Child  - Son, Daughter, Stepson, or Stepdaughter of Passenger Aboard Titanic.
+
+\newpage
+#### >> (dataset reading)
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+# path of the dataset
+setwd("/home/chino/Documentos/17_materias_IS/1_mineria_de_datos/4_semana_miniproyecto1/1_titanic_dataset_project_es")
+
+# read the dataset
+titanic <- read.csv("titanic.csv", stringsAsFactors = FALSE)
+```
+
+# 3.- Basic summary statics 
+- we show the first 10 records of the dataset.
+```{r, include=TRUE}
+head(titanic, 10)
+``` 
+
+\newpage
+- we show the structure of the data and/or the data types of the attributes.\
+```{r, include=TRUE}
+str(titanic)
+```
+
+- summary with basic statistical measures.\
+```{r, include=TRUE}
+summary(titanic)
+```
+
+\newpage
+### Exploring the Categorical Variables
+#### >> Gender Grouping
+```{r, include=TRUE}
+table(titanic$Sex)
+```
+
+#### Showing Percentages
+```{r, include=TRUE}
+sex_table <- table(titanic$Sex)
+sex_pct <- prop.table(sex_table) * 100
+round(sex_pct, digits = 1)
+```
+
+#### >> Embarked
+```{r, include=TRUE}
+table(titanic$Embarked)
+```
+
+#### Showing Percentages
+```{r, include=TRUE}
+embarked_table <- table(titanic$Embarked)
+embarked_pct <- prop.table(embarked_table) * 100
+round(embarked_pct, digits = 1)
+```
+
+\newpage
+#### >> PClass 
+```{r, include=TRUE}
+table(titanic$Pclass)
+```
+
+#### Showing Percentages
+```{r, include=TRUE}
+pclass_table <- table(titanic$Pclass)
+pclass_pct <- prop.table(pclass_table) * 100
+round(pclass_pct, digits = 1)
+```
+
+#### >> Survived
+```{r, include=TRUE}
+table(titanic$Survived)
+```
+
+#### Showing Percentages
+```{r, include=TRUE}
+survived_table <- table(titanic$Survived)
+survived_pct <- prop.table(survived_table) * 100
+round(survived_pct, digits = 1)
+```
+
+\newpage
+# 4.- Boxplots - Interpretation
+This boxplot shows that **the average age of the passengers who were on the titanic is approximately 30 years and the average age is 28 years.** And we can also appreciate several outliers or anomalies, which are data that exceed the range of our normal values.\
+```{r, include=TRUE}
+boxplot(titanic$Age, main = "Titanic Passengers Age Boxplot", ylab ="Age")
+```
+
+This boxplot shows us that the average rate and / or cost of passenger tickets is approximately $ 32 and the average rate is 14.45\
+We also observed several outliers that exceed the range of normal values.
+```{r, include=TRUE}
+boxplot(titanic$Fare, main = "Titanic Passengers Fare Boxplot", ylab = "Fare")
+```
+
+\newpage
+# 5 y 6.- Histograms-Interpretation and Skew of the data-Interpretation.
+We observed that the majority of the passengers were young people because they were between 20 and 30 years old. And it is a **non-symmetric distribution** since it is skewed to the right, because the mean age is greater than the median.
+```{r, include=TRUE}
+hist(titanic$Age, main = "Titanic Passenger Age Histogram", xlab = "Age", ylab = "Passengers")
+```
+
+\newpage
+We observed that the majority of passengers paid less than $ 100 on their boarding tickets.
+And it is a **non-symmetric distribution** since it is skewed to the right because the average rate is higher than the average rate.
+```{r, include=TRUE}
+hist(titanic$Fare, main = "Titanic Passenger Fare Histogram", xlab = "Fare", ylab = "Passengers")
+```
+
+\newpage
+We note that the majority of the passengers traveling on the titanic died and less than half survived. Showing the figures 549 passengers died and 342 survived.
+```{r, include=TRUE}
+hist(titanic$Survived, main = "Titanic Passenger Survival Histogram", xlab = "Survival", ylab = "Passengers")
+```
+
+\newpage
+We observed that the majority of the passengers were wealthy people or with money since they belong to the upper class and less than half of the passengers were distributed between the middle and lower class.
+```{r, include=TRUE}
+hist(titanic$Pclass, main = "Titanic Passenger Socioeconomic Class Histogram", xlab = "Socioeconomic Class", ylab = "Passengers")
+
+```
+
+\newpage
+# 7 y 8.- Quartiles and interpretation.
+We observe that the majority of passengers are in **the age range of 20 to 38 years.**
+And this makes the maximum ages outliers or anomalies, since most of the data is between the 1st and 3rd. quartile; and this is said by the IQR.
+```{r, include=TRUE}
+quantile(titanic$Age,na.rm = TRUE)
+IQR(titanic$Age, na.rm = TRUE)
+```
+
+We observed that the majority of passengers paid a fare and / or ticket cost of around ** 8 to 31 dollars. ** And this makes the high costs considered outliers or anomalies.
+```{r, include=TRUE}
+quantile(titanic$Fare, na.rm = TRUE)
+IQR(titanic$Fare, na.rm = TRUE)
+```
+
+\newpage
+# 9.- Scatterplots. Interpretation.
+We observe that there are many passengers between the ages of 20 and 40 who bought a ticket for less than $ 100.
+And there are very few passengers who bought a ticket with a cost greater than 100 dollars.
+```{r, include=TRUE}
+plot(x=titanic$Fare, titanic$Age, main="Scatter Plot of Fare vs Age", xlab = "Fare", ylab="Passenger Age")
+
+```
+
+\newpage
+We note that there is no relationship between the cost of the ticket and the chances of survival.
+```{r}
+plot(x=titanic$Fare, y=titanic$Survived, main = "Scatterplot of Fare vs Survived", xlab = "Fare", ylab = "Survived")
+```
