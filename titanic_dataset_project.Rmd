@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 # 1.- The data domain
-we will perform an analysis on the titanic dataset to identify 
+It will be performed an analysis on the titanic dataset to identify 
 which passengers survived the wreck or what kind of people were most likely to survive
 taking into account their characteristics such as name, age, sex,
 socioeconomic class, etc. As a brief description we can say that the sinking of the Titanic was one of the most infamous and remembered shipwrecks in history.
@@ -16,30 +16,30 @@ The RMS Titanic was a British passenger cruise ship that sank in the North Atlan
 
 \newpage
 # 2.- Describe each of the variables
-## variable, definition and / or possible values
+## Variable, definition and / or possible values
 PassengerId
-: Passenger identification number.
+: Passenger identification number, numeric.
 
 Survived
-: Indicates if the passenger survived. (0 = No, 1 = Yes).
+: Indicates if the passenger survived. (0 = No, 1 = Yes), categoric.
 
 Pclass
-: Define the socioeconomic class of the passenger. (1 = Lower class, 2 = Middle class, 3 = Upper class).
+: Define the socioeconomic class of the passenger. (1 = Lower class, 2 = Middle class, 3 = Upper class), ordinal.
 
 Name
 : Name of the passenger.
 
 Sex
-: Gender of the passenger. (Male and/or Female).
+: Gender of the passenger. (Male and/or Female), categoric.
 
 Age
-: Passenger age.
+: Passenger age, numeric.
 
 Sib/Sp
-: Number of Siblings/Spouses Aboard.
+: Number of Siblings/Spouses Aboard, discrete.
 
 Parch
-: Number of Parents/Children Aboard.
+: Number of Parents/Children Aboard, discrete.
 
 Ticket
 : Passenger's ticket number.
@@ -51,10 +51,10 @@ Cabin
 : Passenger cabin number.
 
 Embarked
-: Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton).
+: Port of Embarkation (C = Cherbourg; Q = Queenstown; S = Southampton), categoric.
 
-### additional notes for some variables
-sibsp
+### Additional notes for some variables
+Sibsp
 : The dataset defines family relationships like this:
 : Sibling - Brother, Sister, Stepbrother, or Stepsister of Passenger Aboard Titanic.
 : Spouse  - Husband or Wife of Passenger Aboard Titanic.
@@ -75,13 +75,13 @@ titanic <- read.csv("titanic.csv", stringsAsFactors = FALSE)
 ```
 
 # 3.- Basic summary statics 
-- we show the first 10 records of the dataset.
+- It shows the first 10 records of the dataset.
 ```{r, include=TRUE}
 head(titanic, 10)
 ``` 
 
 \newpage
-- we show the structure of the data and/or the data types of the attributes.\
+- It shows the structure of the data and/or the data types of the attributes.\
 ```{r, include=TRUE}
 str(titanic)
 ```
@@ -157,26 +157,26 @@ boxplot(titanic$Fare, main = "Titanic Passengers Fare Boxplot", ylab = "Fare")
 
 \newpage
 # 5 y 6.- Histograms-Interpretation and Skew of the data-Interpretation.
-We observed that the majority of the passengers were young people because they were between 20 and 30 years old. And it is a **non-symmetric distribution** since it is skewed to the right, because the mean age is greater than the median.
+As seen in the graph, the majority of the passengers were young people because they were between 20 and 30 years old. And it is a **non-symmetric distribution** since it is skewed to the right, because the mean age is greater than the median.
 ```{r, include=TRUE}
 hist(titanic$Age, main = "Titanic Passenger Age Histogram", xlab = "Age", ylab = "Passengers")
 ```
 
 \newpage
-We observed that the majority of passengers paid less than $ 100 on their boarding tickets.
-And it is a **non-symmetric distribution** since it is skewed to the right because the average rate is higher than the average rate.
+As seen in the graph, the majority of passengers paid less than $ 100 on their boarding tickets.
+And it is a **non-symmetric distribution** since it is skewed to the right, because the mean fare is greater than the median.
 ```{r, include=TRUE}
 hist(titanic$Fare, main = "Titanic Passenger Fare Histogram", xlab = "Fare", ylab = "Passengers")
 ```
 
 \newpage
-We note that the majority of the passengers traveling on the titanic died and less than half survived. Showing the figures 549 passengers died and 342 survived.
+As seen in the graph, the majority of the passengers traveling on the titanic died and less than half survived. Showing the figures 549 passengers died and 342 survived.
 ```{r, include=TRUE}
 hist(titanic$Survived, main = "Titanic Passenger Survival Histogram", xlab = "Survival", ylab = "Passengers")
 ```
 
 \newpage
-We observed that the majority of the passengers were wealthy people or with money since they belong to the upper class and less than half of the passengers were distributed between the middle and lower class.
+It's observed that the majority of the passengers were wealthy people or with money since they belong to the upper class and less than half of the passengers were distributed between the middle and lower class.
 ```{r, include=TRUE}
 hist(titanic$Pclass, main = "Titanic Passenger Socioeconomic Class Histogram", xlab = "Socioeconomic Class", ylab = "Passengers")
 
@@ -184,14 +184,14 @@ hist(titanic$Pclass, main = "Titanic Passenger Socioeconomic Class Histogram", x
 
 \newpage
 # 7 y 8.- Quartiles and interpretation.
-We observe that the majority of passengers are in **the age range of 20 to 38 years.**
+It's observed that the majority of passengers are in **the age range of 20 to 38 years.**
 And this makes the maximum ages outliers or anomalies, since most of the data is between the 1st and 3rd. quartile; and this is said by the IQR.
 ```{r, include=TRUE}
 quantile(titanic$Age,na.rm = TRUE)
 IQR(titanic$Age, na.rm = TRUE)
 ```
 
-We observed that the majority of passengers paid a fare and / or ticket cost of around ** 8 to 31 dollars. ** And this makes the high costs considered outliers or anomalies.
+It's observed that the majority of passengers paid a fare and / or ticket cost of around ** 8 to 31 dollars. ** And this makes the high costs considered outliers or anomalies.
 ```{r, include=TRUE}
 quantile(titanic$Fare, na.rm = TRUE)
 IQR(titanic$Fare, na.rm = TRUE)
@@ -199,15 +199,15 @@ IQR(titanic$Fare, na.rm = TRUE)
 
 \newpage
 # 9.- Scatterplots. Interpretation.
-We observe that there are many passengers between the ages of 20 and 40 who bought a ticket for less than $ 100.
-And there are very few passengers who bought a ticket with a cost greater than 100 dollars.
+As seen in the graph, there are many passengers between the ages of 20 and 40 who bought a ticket for less than $ 100.
+And there are very few passengers who bought a ticket with a cost greater than 100 dollars, with this plot we can see that the fare had not relation with the age of the passenger, there is no correlation.
 ```{r, include=TRUE}
 plot(x=titanic$Fare, titanic$Age, main="Scatter Plot of Fare vs Age", xlab = "Fare", ylab="Passenger Age")
 
 ```
 
 \newpage
-We note that there is no relationship between the cost of the ticket and the chances of survival.
+As seen in the graph, there is no relationship between the cost of the ticket and the chances of survival.
 ```{r}
 plot(x=titanic$Fare, y=titanic$Survived, main = "Scatterplot of Fare vs Survived", xlab = "Fare", ylab = "Survived")
 ```
